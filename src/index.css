@@ -1,0 +1,133 @@
+/* グローバルデザインシステム (index.css) */
+
+:root {
+  /* カラーパレット (ダークテーマをデフォルトに設定) */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #131a30;
+  --bg-tertiary: #1b2545;
+  --bg-glass: rgba(19, 26, 48, 0.7);
+  --bg-glass-hover: rgba(27, 37, 69, 0.8);
+  
+  --border-color: #24355a;
+  --border-light: #2d4373;
+  --border-active: #3e92cc;
+  
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* ネオン調のアクセントカラー */
+  --color-accent: #00f2fe; /* シアン */
+  --color-accent-secondary: #4facfe; /* ブルー */
+  --color-success: #00f2a1; /* エメラルドグリーン */
+  --color-warning: #ffb703; /* オレンジイエロー */
+  --color-danger: #ff4d6d; /* ネオンピンク */
+  --color-purple: #c084fc; /* ライトパープル */
+  
+  --accent-glow: rgba(0, 242, 254, 0.3);
+  --success-glow: rgba(0, 242, 161, 0.3);
+  --shadow-main: rgba(0, 0, 0, 0.5) 0 8px 32px 0;
+
+  /* フォント指定 */
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* スクロールバーのカスタマイズ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 基本的な共通見出し */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+/* リンクとボタンのリセット */
+button, select, input {
+  font-family: inherit;
+}
+
+/* ビュー遷移アニメーション用 (対応ブラウザでのみ動作) */
+@keyframes slide-to-left {
+  to { transform: translateX(-20px); opacity: 0; }
+}
+
+@keyframes slide-from-right {
+  from { transform: translateX(20px); opacity: 0; }
+}
+
+@keyframes slide-to-right {
+  to { transform: translateX(20px); opacity: 0; }
+}
+
+@keyframes slide-from-left {
+  from { transform: translateX(-20px); opacity: 0; }
+}
+
+::view-transition-group(root) {
+  animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+html:active-view-transition-type(forward)::view-transition-old(root) {
+  animation-name: slide-to-left;
+}
+html:active-view-transition-type(forward)::view-transition-new(root) {
+  animation-name: slide-from-right;
+}
+
+html:active-view-transition-type(backward)::view-transition-old(root) {
+  animation-name: slide-to-right;
+}
+html:active-view-transition-type(backward)::view-transition-new(root) {
+  animation-name: slide-from-left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) {
+    animation: none !important;
+  }
+}
